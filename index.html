@@ -1,1 +1,339 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ดาวน์โหลด - แบบฟอร์ม | กยศ.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #ffffff;
+        }
+        
+        /* ซ่อน Scrollbar สำหรับแท็บเมนูที่เลื่อนได้บนมือถือ */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
+        .tab-btn {
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-btn.active {
+            background-color: #0056b3;
+            color: #ffffff;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+        }
+        .tab-btn.inactive {
+            background-color: #6c757d;
+            color: #ffffff;
+        }
+        .tab-btn.inactive:hover {
+            background-color: #5a6268;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* เปลี่ยนชื่อคลาสจาก list-item เป็น doc-row เพื่อไม่ให้ชนกับ Tailwind */
+        .doc-row:hover .doc-title {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased pt-4 pb-20 sm:pt-8">
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="border-b-2 border-blue-200 pb-3 mb-5 sm:mb-8">
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#0056b3] leading-snug">
+                ดาวน์โหลด - แบบฟอร์ม กยศ. <span class="block sm:inline mt-1 sm:mt-0">มหาวิทยาลัยอุบลราชธานี</span>
+            </h1>
+        </div>
+
+        <div class="flex overflow-x-auto hide-scrollbar items-end gap-1 mb-0 border-b border-gray-200 sm:border-none">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn active px-4 py-2 sm:px-6 sm:py-2.5 text-[15px] sm:text-base font-medium shadow-sm whitespace-nowrap shrink-0">
+                สำหรับผู้กู้ยืมรายใหม่
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn inactive px-4 py-2 sm:px-6 sm:py-2.5 text-[15px] sm:text-base font-medium shadow-sm whitespace-nowrap shrink-0">
+                สำหรับผู้กู้ยืมรายเก่า
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn inactive px-4 py-2 sm:px-6 sm:py-2.5 text-[15px] sm:text-base font-medium shadow-sm whitespace-nowrap shrink-0">
+                สำหรับผู้กู้ยืมเกินหลักสูตร
+            </button>
+            <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn inactive px-4 py-2 sm:px-6 sm:py-2.5 text-[15px] sm:text-base font-medium shadow-sm whitespace-nowrap shrink-0">
+                คู่มือการใช้งานระบบ
+            </button>
+        </div>
+        
+        <div class="h-1.5 sm:h-3 w-full bg-[#0056b3] rounded-bl-lg rounded-br-lg sm:rounded-r-lg sm:rounded-br-none mb-6 sm:mb-8 shadow-md"></div>
+
+        <div id="tab1" class="tab-content active bg-white">
+            <div class="divide-y divide-gray-200">
+                
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">กยศ.102 หนังสือรับรองรายได้ครอบครัวของผู้ขอกู้ยืมเงิน</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc2" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc2', 'https://www.studentloan.or.th/system/files/files/download/102.pdf'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">หนังสือให้ความยินยอมในการเข้าถึงและเปิดเผยข้อมูลส่วนบุคคล</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc3" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc3', 'https://www.studentloan.or.th/th/system/files/files/download/2569_0.pdf'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">หนังสือรับรองการแยกกันอยู่</div>
+                        <div class="text-[13px] sm:text-[14px] text-gray-500 mb-2 leading-relaxed">ใช้ในกรณีบิดา มารดา อยู่ด้วยกันเป็นสามี-ภรรยาโดยไม่ได้สมรสกันแล้วต่อมาก็เลิกกัน</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc4" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc4', 'https://drive.google.com/file/d/1OscoJAMtwuVi0SyZyyYm0BT7T8YZ2HAN/view?usp=sharing'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content bg-white">
+            <div class="divide-y divide-gray-200">
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">กยศ. 108 แบบรายงานข้อมูลผู้กู้ยืมเงิน</div>
+                        <div class="text-[13px] sm:text-[14px] text-gray-500 mb-2 leading-relaxed">ใช้เพื่อการขอเปลี่ยนเลขบัญชีรับเงินกู้ยืม หรือเปลี่ยนแปลงที่อยู่</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc5" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc5', 'https://www.studentloan.or.th/th/system/files/files/download/%E0%B8%81%E0%B8%A2%E0%B8%A8.108%20%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%B9%E0%B9%89%E0%B8%81%E0%B8%B9%E0%B9%89%E0%B8%A2%E0%B8%B7%E0%B8%A1%E0%B9%80%E0%B8%87%E0%B8%B4%E0%B8%99_1.pdf'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">กยศ. 109 แบบรายงานการพ้นสภาพการเป็นนักเรียน/นักศึกษา</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc6" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc6', 'https://www.studentloan.or.th/th/system/files/files/download/%E0%B8%81%E0%B8%A2%E0%B8%A8.109%20%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9E%E0%B9%89%E0%B8%99%E0%B8%AA%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AF_0.pdf'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">กยศ. 204 แบบรายงานสถานภาพการศึกษา</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc7" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc7', 'https://www.studentloan.or.th/th/system/files/files/download/%E0%B8%81%E0%B8%A2%E0%B8%A8.204%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%96%E0%B8%B2%E0%B8%99%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A8%E0%B8%B6%E0%B8%81%E0%B8%A9%E0%B8%B2%20%28%E0%B8%89%E0%B8%9A%E0%B8%B1%E0%B8%9A%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87%29.pdf'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">แบบฟอร์มคำร้องขอเปลี่ยนแปลงแก้ไขข้อมูลส่วนบุคคล</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc8" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc8', 'https://www.studentloan.or.th/th/system/files/files/download/Forms_20250619.pdf'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content bg-white">
+            <div class="divide-y divide-gray-200">
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">แบบฟอร์มคำขอกู้ยืมเงินเกินจำนวนปีที่กำหนดตามหลักสูตร</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc9" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc9', 'https://drive.google.com/file/d/1Ygb6VUzoEUYPqxWi7p0_MfUFWjwQmicA/view?usp=drive_link'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab4" class="tab-content bg-white">
+            <div class="divide-y divide-gray-200">
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">คู่มือการใช้งานระบบกู้ยืม (DSL) สำหรับนักศึกษาและผู้กู้ยืม</div>
+                        <div class="text-[13px] sm:text-[14px] text-gray-500 mb-2 leading-relaxed">รวมขั้นตอนการเข้าใช้งาน การยื่นแบบคำขอ และการยืนยันการกู้ยืมผ่านระบบออนไลน์</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc10" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc10', 'https://www.studentloan.or.th/th/highlight/1616575805'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="doc-row py-4 sm:py-5 flex flex-row items-start gap-3 sm:gap-4 transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white shrink-0 shadow-sm mt-0.5">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <div class="flex-grow w-full">
+                        <div class="doc-title text-lg sm:text-xl font-medium text-[#2d74b4] block mb-1 leading-snug">ขั้นตอนการติดตั้งและใช้งานแอปพลิเคชัน กยศ. Connect</div>
+                        <div class="text-[13px] sm:text-[15px] text-gray-500 flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                            <span>ปรับปรุงล่าสุด: 19 พฤษภาคม 2569</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <span>ดาวน์โหลด: <span id="count-doc11" class="font-semibold text-gray-700">0</span> ครั้ง</span> 
+                            <span class="hidden sm:inline text-gray-300">|</span> 
+                            <a href="#" onclick="processDownload('doc11', 'https://www.studentloan.or.th/th/knowledgemedia/1592798646'); return false;" class="text-red-600 hover:text-red-800 font-medium hover:underline flex items-center gap-1 cursor-pointer">
+                                ดาวน์โหลด
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ฟังก์ชันสลับ Tab
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+                el.classList.add('inactive');
+            });
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.remove('inactive');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // ==========================================
+        // ระบบนับยอดดาวน์โหลดแบบ Real-time
+        // ==========================================
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if(typeof google !== 'undefined' && google.script) {
+                google.script.run.withSuccessHandler(function(counts) {
+                    for (var docId in counts) {
+                        var countElement = document.getElementById('count-' + docId);
+                        if (countElement) {
+                            countElement.innerText = counts[docId];
+                        }
+                    }
+                }).getDownloadCounts();
+            }
+        });
+
+        function processDownload(docId, fileUrl) {
+            window.open(fileUrl, '_blank');
+            
+            var countElement = document.getElementById('count-' + docId);
+            if (countElement) {
+                var currentUiCount = parseInt(countElement.innerText) || 0;
+                countElement.innerText = currentUiCount + 1;
+            }
+
+            if(typeof google !== 'undefined' && google.script) {
+                google.script.run.withSuccessHandler(function(newRealCount) {
+                    if (countElement) {
+                        countElement.innerText = newRealCount;
+                    }
+                }).incrementDownload(docId);
+            }
+        }
+    </script>
+</body>
+</html>
