@@ -288,7 +288,6 @@
     </div>
 
     <script>
-        // ฟังก์ชันสลับ Tab
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => {
@@ -300,9 +299,6 @@
             document.getElementById('btn-' + tabId).classList.add('active');
         }
 
-        // ==========================================
-        // ระบบนับยอดดาวน์โหลดแบบ Real-time
-        // ==========================================
 
         document.addEventListener("DOMContentLoaded", function() {
             if(typeof google !== 'undefined' && google.script) {
@@ -334,6 +330,53 @@
                 }).incrementDownload(docId);
             }
         }
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => {
+            el.classList.remove('active');
+            el.classList.add('inactive');
+        });
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById('btn-' + tabId).classList.remove('inactive');
+        document.getElementById('btn-' + tabId).classList.add('active');
+    }
+
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxNwda_McXj7-S6b2kn3JzgXajdjZTBa3A1DFqzRixXZLteFtUsKpir0R_aBYMfoldB-w/exec'; 
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch(WEB_APP_URL + '?action=getCounts')
+            .then(response => response.json())
+            .then(counts => {
+                for (var docId in counts) {
+                    var countElement = document.getElementById('count-' + docId);
+                    if (countElement) {
+                        countElement.innerText = counts[docId];
+                    }
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+
+    function processDownload(docId, fileUrl) {
+        window.open(fileUrl, '_blank');
+        
+        var countElement = document.getElementById('count-' + docId);
+        if (countElement) {
+            var currentUiCount = parseInt(countElement.innerText) || 0;
+            countElement.innerText = currentUiCount + 1;
+        }
+
+        fetch(WEB_APP_URL + '?action=increment&docId=' + docId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success' && countElement) {
+                    countElement.innerText = data.count;
+                }
+            })
+            .catch(error => console.error('Error updating count:', error));
+    }
     </script>
 </body>
 </html>
